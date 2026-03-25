@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Rajdhani School Books — Create Your Book</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Nunito:wght@400;600;700;800&family=Noto+Serif+Devanagari:wght@400;600&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --p1: #1a0533;
+    --p2: #2d0a5e;
+    --p3: #4b1fa0;
+    --p4: #7c3fcf;
+    --p5: #b07de8;
+    --p6: #dcc6f7;
+    --b1: #030d2e;
+    --b2: #0a1f6e;
+    --b3: #1a3fb8;
+    --b4: #3a6aee;
+    --b5: #7aa8f8;
+    --b6: #c8deff;
+    --gold: #e8c84a;
+    --white: #f8f5ff;
+    --text: #1a0533;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--p1);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ─── STARS BG ─────────────────────────────────── */
+  .stars-bg {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(ellipse at 20% 30%, rgba(74,31,160,0.45) 0%, transparent 55%),
+      radial-gradient(ellipse at 80% 70%, rgba(26,63,184,0.35) 0%, transparent 55%),
+      var(--p1);
+  }
+  .stars-bg::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image:
+      radial-gradient(1px 1px at 15% 20%, rgba(220,198,247,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 45% 60%, rgba(122,168,248,0.7) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 70% 15%, rgba(220,198,247,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 45%, rgba(122,168,248,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 30% 80%, rgba(220,198,247,0.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 60% 90%, rgba(122,168,248,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 92% 10%, rgba(232,200,74,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 5% 55%, rgba(232,200,74,0.4) 0%, transparent 100%);
+  }
+
+  /* ─── NAV ───────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(26,5,51,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(176,125,232,0.2);
+  }
+  .nav-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 1.2rem;
+    color: var(--gold);
+    letter-spacing: 2px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .nav-logo span { font-size: 1.4rem; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a {
+    color: var(--p6);
+    text-decoration: none;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    font-weight: 600;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+  .nav-cta {
+    background: linear-gradient(135deg, var(--p3), var(--b3));
+    color: var(--white) !important;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-weight: 700 !important;
+  }
+
+  /* ─── HERO ──────────────────────────────────────── */
+  .hero {
+    position: relative; z-index: 1;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 8rem 2rem 4rem;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(124,63,207,0.25);
+    border: 1px solid rgba(176,125,232,0.4);
+    padding: 6px 18px;
+    border-radius: 30px;
+    font-size: 0.78rem;
+    color: var(--p5);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s ease both;
+  }
+  .hero-deva {
+    font-family: 'Noto Serif Devanagari', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    letter-spacing: 6px;
+    margin-bottom: 0.5rem;
+    animation: fadeUp 0.9s ease both;
+  }
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: 4px;
+    background: linear-gradient(135deg, var(--p6) 0%, var(--b5) 40%, var(--gold) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+    animation: fadeUp 1s ease both;
+  }
+  .hero-sub {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: var(--b5);
+    letter-spacing: 6px;
+    margin-bottom: 1.5rem;
+    animation: fadeUp 1.1s ease both;
+  }
+  .hero p {
+    max-width: 560px;
+    color: rgba(248,245,255,0.65);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    margin-bottom: 2.5rem;
+    animation: fadeUp 1.2s ease both;
+  }
+  .hero-btns {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+    animation: fadeUp 1.3s ease both;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--p3), var(--b3));
+    color: white;
+    padding: 14px 36px;
+    border-radius: 40px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    letter-spacing: 1px;
+    box-shadow: 0 8px 32px rgba(74,31,160,0.5);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: none; cursor: pointer;
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(74,31,160,0.7); }
+  .btn-outline {
+    background: transparent;
+    color: var(--p5);
+    padding: 14px 36px;
+    border-radius: 40px;
+    font-weight: 700;
+    font-size: 1rem;
+    text-decoration: none;
+    letter-spacing: 1px;
+    border: 1.5px solid rgba(176,125,232,0.5);
+    transition: background 0.2s, border-color 0.2s;
+    cursor: pointer;
+  }
+  .btn-outline:hover { background: rgba(176,125,232,0.1); border-color: var(--p5); }
+
+  .hero-train {
+    position: absolute;
+    bottom: 2rem; left: 0; right: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.2rem;
+    opacity: 0.2;
+    animation: trainSlide 8s linear infinite;
+  }
+  @keyframes trainSlide {
+    0%   { transform: translateX(-120%); }
+    100% { transform: translateX(120%); }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SECTION WRAPPER ───────────────────────────── */
+  section { position: relative; z-index: 1; padding: 5rem 2rem; }
+  .section-label {
+    text-align: center;
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+  .section-title {
+    text-align: center;
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    background: linear-gradient(135deg, var(--p6), var(--b5));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.75rem;
+  }
+  .section-desc {
+    text-align: center;
+    color: rgba(248,245,255,0.55);
+    font-size: 1rem;
+    max-width: 520px;
+    margin: 0 auto 3rem;
+    line-height: 1.7;
+  }
+
+  /* ─── BOOK BUILDER ──────────────────────────────── */
+  #create { background: rgba(10,31,110,0.12); }
+
+  .builder-grid {
+    max-width: 900px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+  }
+  @media (max-width: 700px) { .builder-grid { grid-template-columns: 1fr; } }
+
+  .builder-card {
+    background: rgba(45,10,94,0.35);
+    border: 1px solid rgba(176,125,232,0.2);
+    border-radius: 16px;
+    padding: 1.75rem;
+    backdrop-filter: blur(8px);
+  }
+  .builder-card h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--p5);
+    letter-spacing: 2px;
+    margin-bottom: 1.2rem;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .field-label {
+    display: block;
+    font-size: 0.78rem;
+    color: var(--b5);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .field-input, .field-select, .field-textarea {
+    width: 100%;
+    background: rgba(26,5,51,0.6);
+    border: 1px solid rgba(176,125,232,0.25);
+    border-radius: 10px;
+    color: var(--white);
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.95rem;
+    padding: 10px 14px;
+    margin-bottom: 1rem;
+    outline: none;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .field-input:focus, .field-select:focus, .field-textarea:focus {
+    border-color: var(--p4);
+    background: rgba(74,31,160,0.18);
+  }
+  .field-input::placeholder, .field-textarea::placeholder { color: rgba(248,245,255,0.25); }
+  .field-select option { background: #1a0533; }
+  .field-textarea { resize: vertical; min-height: 90px; }
+
+  .color-row { display: flex; gap: 10px; margin-bottom: 1rem; flex-wrap: wrap; }
+  .color-swatch {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: transform 0.15s, border-color 0.15s;
+  }
+  .color-swatch:hover, .color-swatch.selected { transform: scale(1.2); border-color: var(--gold); }
+
+  .subject-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1rem; }
+  .chip {
+    background: rgba(74,31,160,0.25);
+    border: 1px solid rgba(176,125,232,0.3);
+    color: var(--p5);
+    padding: 5px 14px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .chip.active { background: var(--p3); border-color: var(--p4); color: white; }
+  .chip:hover { border-color: var(--p4); }
+
+  .pages-slider { margin-bottom: 1rem; }
+  .pages-slider input[type=range] {
+    width: 100%; accent-color: var(--p4);
+    margin-top: 6px;
+  }
+  .pages-val {
+    display: flex; justify-content: space-between;
+    font-size: 0.8rem; color: var(--p5); margin-top: 4px;
+  }
+
+  .preview-pane {
+    grid-column: 1 / -1;
+    background: rgba(26,5,51,0.5);
+    border: 1px solid rgba(176,125,232,0.2);
+    border-radius: 16px;
+    padding: 2rem;
+    display: flex; gap: 2rem; align-items: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .book-3d {
+    flex-shrink: 0;
+    width: 160px;
+    perspective: 600px;
+  }
+  .book-cover-3d {
+    width: 140px; height: 200px;
+    border-radius: 6px 14px 14px 6px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 1rem 0.75rem;
+    transform: rotateY(-15deg) rotateX(3deg);
+    box-shadow: -8px 8px 28px rgba(0,0,0,0.5), inset -4px 0 8px rgba(0,0,0,0.2);
+    transition: all 0.5s ease;
+    position: relative; overflow: hidden;
+  }
+  .book-cover-3d::before {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0; width: 12px;
+    background: rgba(0,0,0,0.25);
+    border-right: 1px solid rgba(255,255,255,0.05);
+  }
+  .book-title-3d {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    color: white;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+    word-break: break-word;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .book-subject-3d {
+    font-size: 0.65rem;
+    color: rgba(255,255,255,0.7);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .book-deva-3d {
+    font-family: 'Noto Serif Devanagari', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .book-logo-3d { font-size: 1.8rem; margin-bottom: 6px; }
+  .book-pages-3d {
+    position: absolute; right: -6px; top: 4px; bottom: 4px;
+    width: 10px;
+    background: repeating-linear-gradient(to bottom, #f5f0e8 0px, #f5f0e8 2px, #ddd 2px, #ddd 3px);
+    border-radius: 0 2px 2px 0;
+  }
+
+  .preview-details { flex: 1; min-width: 220px; }
+  .preview-details h3 {
+    font-family: 'Cinzel', serif;
+    color: var(--p5);
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    letter-spacing: 1px;
+  }
+  .detail-row {
+    display: flex; justify-content: space-between;
+    border-bottom: 1px solid rgba(176,125,232,0.1);
+    padding: 7px 0;
+    font-size: 0.88rem;
+  }
+  .detail-row .dk { color: rgba(248,245,255,0.45); }
+  .detail-row .dv { color: var(--white); font-weight: 600; }
+
+  .generate-btn {
+    margin-top: 1.5rem;
+    background: linear-gradient(135deg, var(--p3), var(--b3));
+    color: white;
+    border: none;
+    padding: 13px 32px;
+    border-radius: 40px;
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    cursor: pointer;
+    letter-spacing: 1px;
+    box-shadow: 0 6px 24px rgba(74,31,160,0.5);
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: 100%;
+  }
+  .generate-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(74,31,160,0.7); }
+
+  /* ─── FEATURES ──────────────────────────────────── */
+  #features { }
+  .features-grid {
+    max-width: 1000px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+  }
+  .feature-card {
+    background: rgba(45,10,94,0.3);
+    border: 1px solid rgba(176,125,232,0.15);
+    border-radius: 14px;
+    padding: 1.75rem 1.5rem;
+    text-align: center;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .feature-card:hover { transform: translateY(-4px); border-color: rgba(176,125,232,0.4); }
+  .feature-icon { font-size: 2.4rem; margin-bottom: 1rem; }
+  .feature-card h4 {
+    font-family: 'Cinzel', serif;
+    color: var(--p5);
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+  }
+  .feature-card p { color: rgba(248,245,255,0.5); font-size: 0.88rem; line-height: 1.6; }
+
+  /* ─── BOOK GALLERY ──────────────────────────────── */
+  #gallery { background: rgba(10,31,110,0.1); }
+  .gallery-grid {
+    max-width: 1000px; margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1.5rem;
+  }
+  .gallery-book {
+    display: flex; flex-direction: column; align-items: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  .gallery-book:hover { transform: translateY(-6px); }
+  .gallery-cover {
+    width: 120px; height: 168px;
+    border-radius: 4px 12px 12px 4px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 0.75rem;
+    box-shadow: -5px 6px 20px rgba(0,0,0,0.4);
+    margin-bottom: 0.75rem;
+    position: relative; overflow: hidden;
+  }
+  .gallery-cover::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 10px;
+    background: rgba(0,0,0,0.2);
+  }
+  .gallery-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    color: white;
+    letter-spacing: 0.5px;
+    text-align: center;
+    margin-top: 0.25rem;
+  }
+  .gallery-subject { font-size: 0.72rem; color: var(--p5); margin-top: 2px; }
+
+  /* ─── CTA ───────────────────────────────────────── */
+  #cta {
+    text-align: center;
+    background: linear-gradient(135deg, rgba(74,31,160,0.3), rgba(26,63,184,0.25));
+    border-top: 1px solid rgba(176,125,232,0.2);
+    border-bottom: 1px solid rgba(176,125,232,0.2);
+  }
+  #cta h2 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.6rem, 3vw, 2.6rem);
+    background: linear-gradient(135deg, var(--p6), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+  }
+  #cta p { color: rgba(248,245,255,0.6); margin-bottom: 2rem; font-size: 1rem; }
+
+  /* ─── FOOTER ────────────────────────────────────── */
+  footer {
+    position: relative; z-index: 1;
+    text-align: center;
+    padding: 2.5rem 2rem;
+    border-top: 1px solid rgba(176,125,232,0.1);
+  }
+  footer .f-logo {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    font-size: 1.2rem;
+    letter-spacing: 3px;
+    margin-bottom: 0.5rem;
+  }
+  footer p { color: rgba(248,245,255,0.3); font-size: 0.82rem; }
+
+  /* ─── TOAST ─────────────────────────────────────── */
+  .toast {
+    position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+    background: linear-gradient(135deg, var(--p3), var(--b3));
+    color: white;
+    padding: 14px 24px;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    box-shadow: 0 8px 32px rgba(74,31,160,0.6);
+    transform: translateY(80px); opacity: 0;
+    transition: all 0.4s ease;
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="stars-bg"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo"><span>🚂</span> RAJDHANI BOOKS</div>
+  <div class="nav-links">
+    <a href="#create">Create</a>
+    <a href="#features">Features</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#create" class="nav-cta">Start Free</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-badge">🚂 India's Premier School Book Creator</div>
+  <div class="hero-deva">राजधानी स्कूल बुक्स</div>
+  <h1>RAJDHANI<br>SCHOOL BOOKS</h1>
+  <div class="hero-sub">CREATE · CUSTOMIZE · PRINT</div>
+  <p>Design beautiful, personalized school notebooks and textbooks for every subject. Give every student a book as unique as their journey.</p>
+  <div class="hero-btns">
+    <a href="#create" class="btn-primary">✦ Create Your Book</a>
+    <a href="#gallery" class="btn-outline">View Gallery</a>
+  </div>
+  <div class="hero-train">🚂💨</div>
+</section>
+
+<!-- CREATE SECTION -->
+<section id="create">
+  <div class="section-label">✦ Book Creator</div>
+  <div class="section-title">Design Your School Book</div>
+  <div class="section-desc">Fill in the details below to customize your Rajdhani school book. Watch the live preview update as you type.</div>
+
+  <div class="builder-grid">
+
+    <!-- Left: Book Info -->
+    <div class="builder-card">
+      <h3>📖 Book Details</h3>
+      <label class="field-label">Student Name</label>
+      <input class="field-input" id="studentName" placeholder="e.g. Arjun Sharma" oninput="updatePreview()" />
+
+      <label class="field-label">School Name</label>
+      <input class="field-input" id="schoolName" placeholder="e.g. Rajdhani Public School" oninput="updatePreview()" />
+
+      <label class="field-label">Class / Grade</label>
+      <select class="field-select" id="classGrade" onchange="updatePreview()">
+        <option value="">Select Class</option>
+        <option>Class 1</option><option>Class 2</option><option>Class 3</option>
+        <option>Class 4</option><option>Class 5</option><option>Class 6</option>
+        <option>Class 7</option><option>Class 8</option><option>Class 9</option>
+        <option>Class 10</option><option>Class 11</option><option>Class 12</option>
+      </select>
+
+      <label class="field-label">Academic Year</label>
+      <input class="field-input" id="acadYear" placeholder="e.g. 2025–2026" oninput="updatePreview()" />
+    </div>
+
+    <!-- Right: Customization -->
+    <div class="builder-card">
+      <h3>🎨 Customization</h3>
+      <label class="field-label">Subject</label>
+      <div class="subject-chips" id="subjectChips">
+        <span class="chip active" onclick="selectSubject(this,'Mathematics')">📐 Maths</span>
+        <span class="chip" onclick="selectSubject(this,'Science')">🔬 Science</span>
+        <span class="chip" onclick="selectSubject(this,'History')">🏛 History</span>
+        <span class="chip" onclick="selectSubject(this,'English')">📝 English</span>
+        <span class="chip" onclick="selectSubject(this,'Hindi')">🇮🇳 Hindi</span>
+        <span class="chip" onclick="selectSubject(this,'Geography')">🌍 Geography</span>
+        <span class="chip" onclick="selectSubject(this,'Art')">🎨 Art</span>
+        <span class="chip" onclick="selectSubject(this,'Computer')">💻 Computer</span>
+      </div>
+
+      <label class="field-label">Cover Color</label>
+      <div class="color-row" id="colorRow">
+        <div class="color-swatch selected" style="background:linear-gradient(135deg,#4b1fa0,#1a3fb8)" onclick="selectColor(this,'linear-gradient(135deg,#4b1fa0,#1a3fb8)')"></div>
+        <div class="color-swatch" style="background:linear-gradient(135deg,#7c3fcf,#3a6aee)" onclick="selectColor(this,'linear-gradient(135deg,#7c3fcf,#3a6aee)')"></div>
+        <div class="color-swatch" style="background:linear-gradient(135deg,#1a3fb8,#0a1f6e)" onclick="selectColor(this,'linear-gradient(135deg,#1a3fb8,#0a1f6e)')"></div>
+        <div class="color-swatch" style="background:linear-gradient(135deg,#8B1A1A,#4b1fa0)" onclick="selectColor(this,'linear-gradient(135deg,#8B1A1A,#4b1fa0)')"></div>
+        <div class="color-swatch" style="background:linear-gradient(135deg,#0d6e4e,#1a3fb8)" onclick="selectColor(this,'linear-gradient(135deg,#0d6e4e,#1a3fb8)')"></div>
+        <div class="color-swatch" style="background:linear-gradient(135deg,#c45a00,#7c3fcf)" onclick="selectColor(this,'linear-gradient(135deg,#c45a00,#7c3fcf)')"></div>
+      </div>
+
+      <label class="field-label">Number of Pages</label>
+      <div class="pages-slider">
+        <input type="range" min="50" max="500" step="50" value="100" id="pagesRange" oninput="updatePages(this.value)" />
+        <div class="pages-val"><span>50</span><span id="pagesDisplay" style="color:var(--gold);font-weight:700">100 pages</span><span>500</span></div>
+      </div>
+
+      <label class="field-label">Book Type</label>
+      <select class="field-select" id="bookType" onchange="updatePreview()">
+        <option>Ruled Notebook</option>
+        <option>Plain Notebook</option>
+        <option>Graph Notebook</option>
+        <option>Half Plain Half Ruled</option>
+        <option>Activity Book</option>
+        <option>Drawing Book</option>
+      </select>
+    </div>
+
+    <!-- Preview -->
+    <div class="preview-pane">
+      <div class="book-3d">
+        <div class="book-cover-3d" id="bookCover3d" style="background:linear-gradient(135deg,#4b1fa0,#1a3fb8)">
+          <div class="book-deva-3d">राजधानी</div>
+          <div class="book-logo-3d">📚</div>
+          <div class="book-title-3d" id="previewStudentName">Your Name</div>
+          <div class="book-subject-3d" id="previewSubject">Mathematics</div>
+          <div class="book-pages-3d"></div>
+        </div>
+      </div>
+
+      <div class="preview-details">
+        <h3>✦ Book Summary</h3>
+        <div class="detail-row"><span class="dk">Student</span><span class="dv" id="sumStudent">—</span></div>
+        <div class="detail-row"><span class="dk">School</span><span class="dv" id="sumSchool">—</span></div>
+        <div class="detail-row"><span class="dk">Class</span><span class="dv" id="sumClass">—</span></div>
+        <div class="detail-row"><span class="dk">Subject</span><span class="dv" id="sumSubject">Mathematics</span></div>
+        <div class="detail-row"><span class="dk">Pages</span><span class="dv" id="sumPages">100</span></div>
+        <div class="detail-row"><span class="dk">Type</span><span class="dv" id="sumType">Ruled Notebook</span></div>
+        <div class="detail-row"><span class="dk">Year</span><span class="dv" id="sumYear">—</span></div>
+        <button class="generate-btn" onclick="generateBook()">🚂 Generate My Rajdhani Book</button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="section-label">✦ Why Rajdhani</div>
+  <div class="section-title">Everything You Need</div>
+  <div class="section-desc">Built for students, teachers, and schools across India.</div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">🎨</div>
+      <h4>Full Customization</h4>
+      <p>Choose colors, subjects, page types, and add your name to every cover.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📐</div>
+      <h4>All Subjects</h4>
+      <p>Maths, Science, English, Hindi, History, Geography, Art & more.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🖨️</div>
+      <h4>Print Ready</h4>
+      <p>High-quality print-ready PDF output. Take to any print shop near you.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🚀</div>
+      <h4>Instant Preview</h4>
+      <p>See your book cover live as you design. No surprises at the printer.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🏫</div>
+      <h4>School Packs</h4>
+      <p>Order entire class sets with individual names on every book.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💰</div>
+      <h4>Affordable</h4>
+      <p>Starting at just ₹25 per book. Bulk discounts for schools.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery">
+  <div class="section-label">✦ Sample Books</div>
+  <div class="section-title">Rajdhani Book Gallery</div>
+  <div class="section-desc">Browse some of our most popular book designs.</div>
+  <div class="gallery-grid" id="galleryGrid"></div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <h2>Ready to Create Your Book?</h2>
+  <p>Join thousands of students and schools using Rajdhani Books across India.</p>
+  <a href="#create" class="btn-primary">✦ Create Your Rajdhani Book Now</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="f-logo">🚂 RAJDHANI BOOKS</div>
+  <p style="font-family:'Noto Serif Devanagari',serif;font-size:1rem;color:rgba(212,175,55,0.5);margin:4px 0">राजधानी स्कूल बुक्स</p>
+  <p>© 2025 Rajdhani School Books. Made with ❤️ in India.</p>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  let selectedSubject = 'Mathematics';
+  let selectedColor = 'linear-gradient(135deg,#4b1fa0,#1a3fb8)';
+  let pagesCount = 100;
+
+  function selectSubject(el, name) {
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+    selectedSubject = name;
+    updatePreview();
+  }
+
+  function selectColor(el, color) {
+    document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+    el.classList.add('selected');
+    selectedColor = color;
+    document.getElementById('bookCover3d').style.background = color;
+  }
+
+  function updatePages(val) {
+    pagesCount = val;
+    document.getElementById('pagesDisplay').textContent = val + ' pages';
+    document.getElementById('sumPages').textContent = val;
+  }
+
+  function updatePreview() {
+    const name = document.getElementById('studentName').value || 'Your Name';
+    const school = document.getElementById('schoolName').value || '—';
+    const cls = document.getElementById('classGrade').value || '—';
+    const year = document.getElementById('acadYear').value || '—';
+    const type = document.getElementById('bookType').value;
+
+    document.getElementById('previewStudentName').textContent = name;
+    document.getElementById('previewSubject').textContent = selectedSubject;
+    document.getElementById('sumStudent').textContent = name === 'Your Name' ? '—' : name;
+    document.getElementById('sumSchool').textContent = school;
+    document.getElementById('sumClass').textContent = cls;
+    document.getElementById('sumSubject').textContent = selectedSubject;
+    document.getElementById('sumYear').textContent = year;
+    document.getElementById('sumType').textContent = type;
+    document.getElementById('sumPages').textContent = pagesCount;
+  }
+
+  function generateBook() {
+    const name = document.getElementById('studentName').value;
+    if (!name) {
+      showToast('⚠️ Please enter the student name first!');
+      return;
+    }
+    showToast('🚂 Your Rajdhani Book is being prepared!');
+    setTimeout(() => showToast('✅ Book created successfully! Ready to print.'), 2500);
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2800);
+  }
+
+  // Gallery data
+  const galleryBooks = [
+    { name: 'Mathematics', color: 'linear-gradient(135deg,#4b1fa0,#1a3fb8)', icon: '📐', label: 'Class 8' },
+    { name: 'Science', color: 'linear-gradient(135deg,#0d6e4e,#1a3fb8)', icon: '🔬', label: 'Class 7' },
+    { name: 'History', color: 'linear-gradient(135deg,#8B1A1A,#4b1fa0)', icon: '🏛', label: 'Class 9' },
+    { name: 'English', color: 'linear-gradient(135deg,#7c3fcf,#3a6aee)', icon: '📝', label: 'Class 6' },
+    { name: 'Hindi', color: 'linear-gradient(135deg,#c45a00,#7c3fcf)', icon: '🇮🇳', label: 'Class 5' },
+    { name: 'Geography', color: 'linear-gradient(135deg,#1a3fb8,#0a1f6e)', icon: '🌍', label: 'Class 10' },
+    { name: 'Art', color: 'linear-gradient(135deg,#7c3fcf,#c45a00)', icon: '🎨', label: 'Class 4' },
+    { name: 'Computer', color: 'linear-gradient(135deg,#0a1f6e,#4b1fa0)', icon: '💻', label: 'Class 11' },
+  ];
+
+  const grid = document.getElementById('galleryGrid');
+  galleryBooks.forEach(b => {
+    grid.innerHTML += `
+      <div class="gallery-book" onclick="pickGallery('${b.name}','${b.color}')">
+        <div class="gallery-cover" style="background:${b.color}">
+          <div style="font-size:1.6rem;margin-bottom:6px">${b.icon}</div>
+          <div style="font-family:'Cinzel',serif;font-size:0.75rem;color:white;letter-spacing:1px">${b.name}</div>
+          <div style="font-family:'Noto Serif Devanagari',serif;font-size:0.85rem;color:#e8c84a;margin-top:4px">राजधानी</div>
+          <div style="position:absolute;right:-5px;top:4px;bottom:4px;width:9px;background:repeating-linear-gradient(to bottom,#f5f0e8 0px,#f5f0e8 2px,#ddd 2px,#ddd 3px);border-radius:0 2px 2px 0"></div>
+        </div>
+        <div class="gallery-title">${b.name}</div>
+        <div class="gallery-subject">${b.label}</div>
+      </div>`;
+  });
+
+  function pickGallery(subject, color) {
+    document.querySelectorAll('.chip').forEach(c => {
+      if (c.textContent.includes(subject.slice(0,3))) {
+        c.click();
+      }
+    });
+    selectedColor = color;
+    document.querySelectorAll('.color-swatch').forEach(s => s.classList.remove('selected'));
+    document.getElementById('bookCover3d').style.background = color;
+    document.getElementById('create').scrollIntoView({ behavior: 'smooth' });
+    showToast('📚 ' + subject + ' template loaded!');
+  }
+
+  updatePreview();
+</script>
+</body>
+</html>
